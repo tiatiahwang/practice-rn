@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, Touchable } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 
 import styles from './popularjobs.style';
@@ -9,11 +9,13 @@ import useFetch from '../../../hook/useFetch';
 
 const Popularjobs = () => {
   const router = useRouter();
+  const [selectedJob, setSelectedJob] = useState();
   const { data, isLoading, error } = useFetch('search', {
     query: 'React developer',
     num_pages: 1,
   });
-  // console.log(data);
+
+  const handleCardPress = (item) => {};
 
   return (
     <View style={styles.container}>
@@ -31,7 +33,7 @@ const Popularjobs = () => {
         ) : (
           <FlatList
             data={data}
-            renderItem={({ item }) => <PopularJobCard item={item} />}
+            renderItem={({ item }) => <PopularJobCard item={item} selectedJob={selectedJob} />}
             keyExtractor={(item) => item.job_id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
